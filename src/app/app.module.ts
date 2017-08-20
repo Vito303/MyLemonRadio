@@ -1,12 +1,10 @@
-import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';  // <-- import HttpModule
 
-import { AppComponent }            from './app.component';
-//import { AddressComponent }        from './address.component';
-//import { CustomerDetailComponent } from './radio-detail.component';
-import { CustomerListComponent }   from './radio-list.component';
+import { AppComponent } from './app.component';
+import { RadioListComponent } from './radio-list/radio-list.component';
 
 import { DataService }   from './data.service';
 import { LoggerService } from './logger.service';
@@ -16,24 +14,21 @@ import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
 
 @NgModule({
+  declarations: [
+    AppComponent,
+    RadioListComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
-
-    HttpModule,  // <--  add HttpModule here
-
-    InMemoryWebApiModule.forRoot(InMemoryDataService) // <-- register in-mem-web-api and its data
+    
+        HttpModule,  // <--  add HttpModule here
+    
+        InMemoryWebApiModule.forRoot(InMemoryDataService) // <-- register in-mem-web-api and its data      
   ],
-  declarations: [
-    AppComponent,
-    //AddressComponent,
-    //CustomerDetailComponent,
-    CustomerListComponent
-  ],
-  providers: [
+  providers: [   
     DataService,
-    LoggerService
-  ],
-  bootstrap: [ AppComponent ]
+    LoggerService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

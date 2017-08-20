@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Customer } from './model';
+import { Customer } from '../model';
 
-import { DataService }   from './data.service';
-import { LoggerService } from './logger.service';
+import { DataService }   from '../data.service';
+import { LoggerService } from '../logger.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'customer-list',
-  templateUrl: 'radio-list.component.html',
-  styleUrls: ['radio-list.component.css']
+  selector: 'radio-list',
+  templateUrl: './radio-list.component.html',
+  styleUrls: ['./radio-list.component.css']
 })
-
-export class CustomerListComponent implements OnInit {
+export class RadioListComponent implements OnInit {
   customer: Customer;
   customers: Customer[];
   isBusy = false;

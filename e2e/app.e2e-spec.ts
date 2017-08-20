@@ -1,10 +1,10 @@
-import { MyLemonAppPage } from './app.po';
+import { AppPage } from './app.po';
 
-describe('my-lemon-app App', () => {
-  let page: MyLemonAppPage;
+describe('my-lemon-radio App', () => {
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new MyLemonAppPage();
+    page = new AppPage();
   });
 
   it('should display welcome message', () => {
