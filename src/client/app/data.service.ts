@@ -1,6 +1,6 @@
 // Observable DataService
 import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';  // <-- import Http & Headers
+import { Headers, Http, Response} from '@angular/http';  // <-- import Http & Headers
 
 import { Customer }      from './model';
 import { Station }      from './model-data';
@@ -19,7 +19,7 @@ import 'rxjs/add/observable/throw'; // <-- add rxjs Observable extensions used h
 @Injectable()
 export class DataService {
   private customersUrl = 'api/customers';
-  private stationsUrl = 'www.lemon-radio.com/web-service-v2/?show=radios_in_cuntry&parent_id=177';
+  private stationsUrl = 'http://www.lemon-radio.com/web-service-v2/?show=radios_in_country&parent_id=177';
   private statesUrl = 'api/states';
   private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -45,15 +45,29 @@ export class DataService {
       });
   }
 
-  /** Get existing stations as an Observable */
-  getRadioStations(): Observable<Station[]> {
-    this.logger.log('Getting radio station as an Observable via Http ...');
-
+  getRadioStations():Observable<Station[]> {
     return this.http.get(this.stationsUrl)
-      .map(response => response.json().data as Station[])  // <-- extract data
-      .do(stations => this.logger.log(`Got ${stations.length} stations`))
-      .catch(error => this.handleError(error));
-  } 
+        .map(this.extractData)
+        .catch(this.handleError)
+  }
+
+  private extractData(res:Response) {
+    let body = res.json();
+    return body || [];
+  }
+
+  // /** Get existing stations as an Observable */
+  // getRadioStations(): Observable<Station[]> {
+  //   this.logger.log('Getting radio station as an Observable via Http ...');
+
+  //   return this.http.get(this.stationsUrl)
+  //     .map(response => 
+  //       //response.json().data as Station[]
+  //       this.logger.log(response.json().data)
+  //     )  // <-- extract data
+  //     //.do(sta => this.logger.log(`Got ${sta.length} stations`))
+  //     .catch(error => this.handleError(error));
+  // } 
   
   /** Get existing customers as an Observable */
   getCustomers(): Observable<Customer[]> {

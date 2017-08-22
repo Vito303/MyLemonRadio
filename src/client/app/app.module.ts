@@ -9,9 +9,9 @@ import { RadioListComponent } from './radio-list/radio-list.component';
 import { DataService }   from './data.service';
 import { LoggerService } from './logger.service';
 
-// in-mem-web-api and its test-data service
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+// // in-mem-web-api and its test-data service
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryDataService }  from './in-memory-data.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
     
         HttpModule,  // <--  add HttpModule here
     
-        InMemoryWebApiModule.forRoot(InMemoryDataService) // <-- register in-mem-web-api and its data      
+        //InMemoryWebApiModule.forRoot(InMemoryDataService) // <-- register in-mem-web-api and its data      
   ],
   providers: [   
     DataService,
