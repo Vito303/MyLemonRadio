@@ -26,3 +26,9 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Developer steps
+
+Run `ng serve` for a dev server.
+Run `ng build` for build app in dev folder.
+Run `node /src/server/index.js` or use `launch.json` for runing server api.

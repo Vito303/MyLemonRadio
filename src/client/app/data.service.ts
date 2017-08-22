@@ -19,13 +19,38 @@ import 'rxjs/add/observable/throw'; // <-- add rxjs Observable extensions used h
 @Injectable()
 export class DataService {
   private customersUrl = 'api/customers';
-  private stationsUrl = 'http://www.lemon-radio.com/web-service-v2/?show=radios_in_country&parent_id=177';
+  private stationsUrl = 'api/stations';
   private statesUrl = 'api/states';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(
     private http: Http,  // <-- inject http
     private logger: LoggerService) { }
+
+    // getRadioStations():Observable<Station[]> {
+    //   return this.http.get(this.stationsUrl)
+    //       .map(this.extractData)
+    //       .catch(this.handleError)
+    // }
+  
+    // private extractData(res:Response) {
+    //   let body = res.json();
+    //   return body || [];
+    // }
+  
+    /** Get existing stations as an Observable */
+    getRadioStations(): Observable<Station[]> {
+      this.logger.log('Getting radio station as an Observable via Http ...');
+  
+      return this.http.get(this.stationsUrl)
+        .map(response => 
+          //response.json().data as Station[]
+          // console.log(response.json().data)
+          this.logger.log(response.json().data)
+        )  // <-- extract data
+        //.do(sta => this.logger.log(`Got ${sta.length} stations`))
+        .catch(error => this.handleError(error));
+    } 
 
   /** Get existing customers as a Promise */
   getCustomersP(): Promise<Customer[]> {
@@ -45,30 +70,6 @@ export class DataService {
       });
   }
 
-  getRadioStations():Observable<Station[]> {
-    return this.http.get(this.stationsUrl)
-        .map(this.extractData)
-        .catch(this.handleError)
-  }
-
-  private extractData(res:Response) {
-    let body = res.json();
-    return body || [];
-  }
-
-  // /** Get existing stations as an Observable */
-  // getRadioStations(): Observable<Station[]> {
-  //   this.logger.log('Getting radio station as an Observable via Http ...');
-
-  //   return this.http.get(this.stationsUrl)
-  //     .map(response => 
-  //       //response.json().data as Station[]
-  //       this.logger.log(response.json().data)
-  //     )  // <-- extract data
-  //     //.do(sta => this.logger.log(`Got ${sta.length} stations`))
-  //     .catch(error => this.handleError(error));
-  // } 
-  
   /** Get existing customers as an Observable */
   getCustomers(): Observable<Customer[]> {
     this.logger.log('Getting customers as an Observable via Http ...');

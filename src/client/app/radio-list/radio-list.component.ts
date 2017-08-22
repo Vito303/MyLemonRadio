@@ -24,7 +24,7 @@ export class RadioListComponent implements OnInit {
     private logger: LoggerService) { }
 
   ngOnInit() { 
-    //this.getCustomers(); 
+    this.getCustomers(); 
     this.getStations(); 
   }
 
