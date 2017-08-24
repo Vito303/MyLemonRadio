@@ -1,6 +1,7 @@
 // Observable DataService
 import { Injectable }    from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';  // <-- import Http & Headers
+import { HttpClient} from '@angular/common/http';
 
 import { Customer }      from './model';
 import { Station }      from './model-data';
@@ -25,32 +26,35 @@ export class DataService {
 
   constructor(
     private http: Http,  // <-- inject http
+    private httpClient: HttpClient,
     private logger: LoggerService) { }
 
+    getRadioStations() {
+      return this.httpClient.get<Array<Station>>('api/stations');
+    }
     // getRadioStations():Observable<Station[]> {
-    //   return this.http.get(this.stationsUrl)
+    //   this.logger.log('tu1');
+    //   return this.httpClient.get(this.stationsUrl)
     //       .map(this.extractData)
     //       .catch(this.handleError)
     // }
   
     // private extractData(res:Response) {
+    //   this.logger.log('tu2');
     //   let body = res.json();
+    //   this.logger.log(body);
     //   return body || [];
     // }
   
-    /** Get existing stations as an Observable */
-    getRadioStations(): Observable<Station[]> {
-      this.logger.log('Getting radio station as an Observable via Http ...');
+    // /** Get existing stations as an Observable */
+    // getRadioStations(): Observable<Station[]> {
+    //   this.logger.log('Getting radio station as an Observable via Http ...');
   
-      return this.http.get(this.stationsUrl)
-        .map(response => 
-          //response.json().data as Station[]
-          // console.log(response.json().data)
-          this.logger.log(response.json().data)
-        )  // <-- extract data
-        //.do(sta => this.logger.log(`Got ${sta.length} stations`))
-        .catch(error => this.handleError(error));
-    } 
+    //   return this.http.get(this.stationsUrl)
+    //     .map(response => response.json().data as Station[])  // <-- extract data
+    //     .do(sta => this.logger.log(`Got ${sta.length} stations`))
+    //     .catch(error => this.handleError(error));   
+    // } 
 
   /** Get existing customers as a Promise */
   getCustomersP(): Promise<Customer[]> {

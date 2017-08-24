@@ -15,17 +15,23 @@ import { LoggerService } from '../logger.service';
 export class RadioListComponent implements OnInit {
   customer: Customer;
   customers: Customer[];
-  station: Station;
-  stations: Station[];
   isBusy = false;
+
+  stations: any = [];
 
   constructor(
     private dataService: DataService,
     private logger: LoggerService) { }
 
   ngOnInit() { 
-    this.getCustomers(); 
+    //this.getCustomers(); 
     this.getStations(); 
+  }
+
+  getStations() {
+    return this.dataService.getRadioStations().subscribe(stations => {
+      this.stations = stations;
+    });
   }
 
   getCustomers() {
@@ -40,26 +46,6 @@ export class RadioListComponent implements OnInit {
         custs => {
           this.isBusy = false;
           this.customers = custs;
-        },
-        (errorMsg: string) => {
-          this.isBusy = false;
-          alert(errorMsg); // Don't use alert!
-        }
-      );
-  }
-
-  getStations() {
-    this.station = undefined;  // <-- clear before refresh
-    this.stations = undefined;
-
-    this.isBusy = true;
-    this.logger.log('Getting stations ...');
-
-    // this.dataService.getCustomersP().then(  // Promise version
-    this.dataService.getRadioStations().subscribe( // Observable version
-        sta => {
-          this.isBusy = false;
-          this.stations = sta;
         },
         (errorMsg: string) => {
           this.isBusy = false;

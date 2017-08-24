@@ -3,7 +3,8 @@ var request = require('request');
 function getStations(req, res) {
     request.get('http://www.lemon-radio.com/web-service-v2/?show=radios_in_country&parent_id=177', function (error, response, body) {
         if (error) throw error;
-        res.send(body)
+        var dataJson = JSON.parse(body)
+        res.send(dataJson.data)
       });
   }
   
