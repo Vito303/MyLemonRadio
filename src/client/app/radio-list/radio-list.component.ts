@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Station } from '../model-data';
 import { Customer } from '../model';
@@ -13,6 +13,7 @@ import { LoggerService } from '../logger.service';
   styleUrls: ['./radio-list.component.css']
 })
 export class RadioListComponent implements OnInit {
+  station: Station;  
   customer: Customer;
   customers: Customer[];
   isBusy = false;
@@ -29,6 +30,9 @@ export class RadioListComponent implements OnInit {
   }
 
   getStations() {
+    this.station = undefined;  // <-- clear before refresh
+    this.stations = undefined;
+
     return this.dataService.getRadioStations().subscribe(stations => {
       this.stations = stations;
     });

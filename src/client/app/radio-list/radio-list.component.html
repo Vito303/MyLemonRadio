@@ -6,6 +6,15 @@
   <button (click)="save(customer)" [hidden]="!customer">Save</button> &nbsp;
 </p>
 
+<fieldset>
+    <label>
+      Station:
+      <select [(ngModel)]="station">
+        <option *ngFor="let stat of stations">{{stat.name}}</option>
+      </select>
+    </label>
+</fieldset>
+
 <ul>
   <li *ngFor="let stat of stations"
       (click)="station = stat"
