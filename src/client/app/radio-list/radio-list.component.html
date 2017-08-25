@@ -1,30 +1,32 @@
-<h1>Customers</h1>
-<p *ngIf="isBusy"><i>Loading customers ...</i></p>
+<h1>Stations</h1>
+<p *ngIf="isBusy"><i>Loading stations ...</i></p>
 <p *ngIf="!isBusy">
-  <i>Click to select a customer</i> &nbsp;
-  <button (click)="getStations()">Refresh</button> &nbsp;
-  <button (click)="save(customer)" [hidden]="!customer">Save</button> &nbsp;
+  <i>Click to select a station</i> &nbsp;
+  <button (click)="getStations()" [hidden]="!station">Refresh</button> &nbsp;
 </p>
 
 <fieldset>
     <label>
       Station:
-      <select [(ngModel)]="station">
+      <select [(ngModel)]="station.name">
         <option *ngFor="let stat of stations">{{stat.name}}</option>
       </select>
     </label>
 </fieldset>
 
-<ul>
-  <li *ngFor="let stat of stations"
-      (click)="station = stat"
-      [ngClass]="{selected: stat === station}">
-      {{stat.name}}
-      {{stat.website}}
-  </li>
-</ul>
+<div *ngIf="!isBusy">
+  <i>Click to play a station</i> &nbsp;
+  <button (click)="playStation()" [hidden]="!station">Play</button> &nbsp;
+  <ul>
+    <li>
+        {{station.id}}
+        {{station.name}}
+        {{station.website}}
+    </li>
+  </ul>
+</div>
 
-<div *ngIf="customer">
+<div *ngIf="!isBusy">
   <hr>
   <!-- <customer-detail [customer]="customer"
                    (shift)="shift($event)">

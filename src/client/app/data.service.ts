@@ -3,7 +3,6 @@ import { Injectable }    from '@angular/core';
 import { Headers, Http, Response} from '@angular/http';  // <-- import Http & Headers
 import { HttpClient} from '@angular/common/http';
 
-import { Customer }      from './model';
 import { Station }      from './model-data';
 import { LoggerService } from './logger.service';
 
@@ -19,9 +18,7 @@ import 'rxjs/add/observable/throw'; // <-- add rxjs Observable extensions used h
 
 @Injectable()
 export class DataService {
-  private customersUrl = 'api/customers';
   private stationsUrl = 'api/stations';
-  private statesUrl = 'api/states';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(
@@ -29,90 +26,24 @@ export class DataService {
     private httpClient: HttpClient,
     private logger: LoggerService) { }
 
-    getRadioStations() {
-      return this.httpClient.get<Array<Station>>('api/stations');
+    playRadioStation(idStation){
+      var stationUrl = 'http://www.lemon-radio.com/web-service-v2/?show=radio_streams_all&parent_id=${idStation}';
+      window.open(stationUrl, "_blank");;
     }
-    // getRadioStations():Observable<Station[]> {
-    //   this.logger.log('tu1');
-    //   return this.httpClient.get(this.stationsUrl)
-    //       .map(this.extractData)
-    //       .catch(this.handleError)
+    
+    // getRadioStations() {
+    //   return this.httpClient.get<Array<Station>>('api/stations').catch(error => this.handleError(error));
     // }
-  
-    // private extractData(res:Response) {
-    //   this.logger.log('tu2');
-    //   let body = res.json();
-    //   this.logger.log(body);
-    //   return body || [];
-    // }
-  
-    // /** Get existing stations as an Observable */
-    // getRadioStations(): Observable<Station[]> {
-    //   this.logger.log('Getting radio station as an Observable via Http ...');
-  
-    //   return this.http.get(this.stationsUrl)
-    //     .map(response => response.json().data as Station[])  // <-- extract data
-    //     .do(sta => this.logger.log(`Got ${sta.length} stations`))
-    //     .catch(error => this.handleError(error));   
-    // } 
 
-  /** Get existing customers as a Promise */
-  getCustomersP(): Promise<Customer[]> {
-    this.logger.log('Getting customers as a Promise via Http ...');
+    /** Get existing customers as an Observable */
+    getRadioStations(): Observable<Station[]> {
+      this.logger.log('Getting customers as an Observable via Http ...');
 
-    return this.http.get(this.customersUrl) // <-- returns an observable
-      .toPromise() // <-- convert immediately to a promise
-      .then(response => {
-        const custs = response.json().data as Customer[]; // <-- extract data from the response
-        this.logger.log(`Got ${custs.length} customers`);
-        return custs;
-      })
-      .catch((error: any) => {
-        this.logger.log(`An error occurred ${error}`); // for demo purposes only
-        // re-throw user-facing message
-        return Promise.reject('Something bad happened with customers; please check the console');
-      });
-  }
-
-  /** Get existing customers as an Observable */
-  getCustomers(): Observable<Customer[]> {
-    this.logger.log('Getting customers as an Observable via Http ...');
-
-    return this.http.get(this.customersUrl)
-      .map(response => response.json().data as Customer[])  // <-- extract data
-      .do(custs => this.logger.log(`Got ${custs.length} customers`))
-      .catch(error => this.handleError(error));
-  }
-
-  /** Get existing states as an Observable */
-  getStates(): Observable<string[]> {
-    this.logger.log('Getting states as an Observable via Http ...');
-
-    return this.http.get(this.statesUrl)
-      .map(response => {
-        return response.json().data as string[];
-      })  // <-- extract data
-      .do(states => this.logger.log(`Got ${states.length} states`))
-      .catch(error => this.handleError(error));
-  }
-
-  /** Update existing customer */
-  update(customer: Customer): Observable<any> {
-    const url = `${this.customersUrl}/${customer.id}`;
-    const result = this.http.put(url, customer, { headers: this.headers })
-      .do(response => this.logger.log(`Saved customer ${customer.name}`))
-      .share(); // execute once no matter how many subscriptions
-
-    // Result is "cold" which means the update won't happen until something subscribes
-    // Ensure update happens even if caller doesn't subscribe
-    result.subscribe( // triggers the operation, making it "hot"
-      undefined, // only care about failure
-      error => this.handleError(error)
-    );
-
-    return result;
-  }
-
+      return this.http.get(this.stationsUrl)
+        .map(response => response.json().data as Station[])  // <-- extract data
+        .do(stat => this.logger.log(`Got ${stat.length} stations`))
+        .catch(error => this.handleError(error));
+    }    
   /** Common Http Observable error handler */
   private handleError(error: any): Observable<any> {
     this.logger.log(`An error occurred: ${error}`); // for demo purposes only
