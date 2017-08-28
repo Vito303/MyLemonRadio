@@ -31,4 +31,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Run `ng serve` for a dev server.
 Run `ng build` for build app in dev folder.
+RUN `ng b -prod` for production.
 Run `node /src/server/index.js` or use `launch.json` for runing server api.

@@ -4,3 +4,8 @@ export class Station {
   website: string;
   language: string;
 }
+
+export class Stream {
+  type: string;
+  url: string;
+}

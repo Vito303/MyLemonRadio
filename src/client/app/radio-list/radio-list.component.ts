@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Station } from '../model-data';
+import { Station, Stream } from '../model-data';
 
 import { DataService }   from '../data.service';
 import { LoggerService } from '../logger.service';
@@ -11,9 +11,12 @@ import { LoggerService } from '../logger.service';
   templateUrl: './radio-list.component.html',
   styleUrls: ['./radio-list.component.css']
 })
+
 export class RadioListComponent implements OnInit {
   station: Station;  
   stations: any = [];
+  stream: Stream;
+  streams: any = [];  
   isBusy = false;
 
   constructor(
@@ -22,12 +25,25 @@ export class RadioListComponent implements OnInit {
 
   ngOnInit() { 
     this.getStations();
+   }
+
+  playStation(station) {
+    this.logger.log(station.id);
+    this.getStreams(station.id);
   }
 
-  playStation() {
-    return this.dataService.playRadioStation(this.station);
-  }
+  getStreams(id) {
+    this.stream = undefined;  // <-- clear before refresh
+    this.streams = undefined;
 
+    this.isBusy = true;
+    return this.dataService.getRadioStationStreams(id).subscribe(streams => {
+      this.isBusy = false;
+      this.streams = streams;
+      this.stream = Object.assign({}, streams[0])
+    });
+  }
+  
   getStations() {
     this.station = undefined;  // <-- clear before refresh
     this.stations = undefined;

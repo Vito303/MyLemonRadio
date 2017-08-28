@@ -5,26 +5,36 @@
   <button (click)="getStations()" [hidden]="!station">Refresh</button> &nbsp;
 </p>
 
-<fieldset>
-    <label>
-      Station:
-      <select [(ngModel)]="station.name">
-        <option *ngFor="let stat of stations">{{stat.name}}</option>
-      </select>
-    </label>
-</fieldset>
-
 <div *ngIf="!isBusy">
+  <fieldset>
+      <label>
+        Station:
+        <select [(ngModel)]="station.name">
+          <option *ngFor="let stat of stations">{{stat.name}}</option>
+        </select>
+      </label>
+  </fieldset>
+</div>
+
+<p *ngIf="!isBusy">
   <i>Click to play a station</i> &nbsp;
-  <button (click)="playStation()" [hidden]="!station">Play</button> &nbsp;
-  <ul>
+  <button (click)="playStation(station)" [hidden]="!station">Play</button> &nbsp;
+</p>
+
+  <!-- <ul>
     <li>
         {{station.id}}
         {{station.name}}
         {{station.website}}
     </li>
   </ul>
-</div>
+
+  <ul>
+    <li>
+        {{stream.type}}
+        {{stream.url}}
+    </li>
+  </ul> -->
 
 <div *ngIf="!isBusy">
   <hr>
