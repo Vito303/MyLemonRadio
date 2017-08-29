@@ -13,11 +13,13 @@ import { LoggerService } from './logger.service';
 // in-mem-web-api and its test-data service
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
+import { RadioAudioComponent } from './radio-audio/radio-audio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RadioListComponent
+    RadioListComponent,
+    RadioAudioComponent
   ],
   imports: [
     BrowserModule,

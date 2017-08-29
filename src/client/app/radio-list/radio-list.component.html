@@ -9,8 +9,8 @@
   <fieldset>
       <label>
         Station:
-        <select [(ngModel)]="station.name">
-          <option *ngFor="let stat of stations">{{stat.name}}</option>
+        <select [value]="currentSectionIx" (change)="onSectionChange($event.target.selectedIndex)">
+          <option *ngFor="let stat of stations; let i = index" [value]="i">{{stat.name}}</option>
         </select>
       </label>
   </fieldset>

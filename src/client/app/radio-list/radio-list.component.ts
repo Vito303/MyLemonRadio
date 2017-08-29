@@ -19,6 +19,8 @@ export class RadioListComponent implements OnInit {
   streams: any = [];  
   isBusy = false;
 
+  currentSectionIx = 0;
+
   constructor(
     private dataService: DataService,
     private logger: LoggerService) { }
@@ -27,8 +29,13 @@ export class RadioListComponent implements OnInit {
     this.getStations();
    }
 
+  onSectionChange(index: number) {
+    this.currentSectionIx = index;
+    this.station = this.stations[index];
+    this.logger.log(this.station.name);
+  }
+
   playStation(station) {
-    this.logger.log(station.id);
     this.getStreams(station.id);
   }
 
