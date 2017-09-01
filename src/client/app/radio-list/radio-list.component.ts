@@ -13,7 +13,7 @@ import { LoggerService } from '../logger.service';
 })
 
 export class RadioListComponent implements OnInit {
-  station: Station;  
+  station: Station;
   stations: any = [];
   stream: Stream;
   streams: any = [];  
@@ -32,6 +32,7 @@ export class RadioListComponent implements OnInit {
   onSectionChange(index: number) {
     this.currentSectionIx = index;
     this.station = this.stations[index];
+    this.getStreams(this.station.id);
     this.logger.log(this.station.name);
   }
 
@@ -60,6 +61,7 @@ export class RadioListComponent implements OnInit {
       this.isBusy = false;
       this.stations = stations;
       this.station = Object.assign({}, stations[0])
+      this.getStreams(this.station.id);
     });
   }
 

@@ -17,8 +17,9 @@
 </div>
 
 <p *ngIf="!isBusy">
-  <i>Click to play a station</i> &nbsp;
-  <button (click)="playStation(station)" [hidden]="!station">Play</button> &nbsp;
+  <radio-audio [stream]="stream" (shift)="shift($event)" [hidden]="!station"></radio-audio>  
+  <!-- <i>Click to play a station</i> &nbsp;
+  <button (click)="playStation(station)" [hidden]="!station">Play</button> &nbsp; -->
 </p>
 
   <!-- <ul>
@@ -35,6 +36,7 @@
         {{stream.url}}
     </li>
   </ul> -->
+
 
 <div *ngIf="!isBusy">
   <hr>

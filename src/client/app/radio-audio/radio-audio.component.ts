@@ -1,17 +1,27 @@
 import { Component, Input, Output, EventEmitter, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 
+import { Stream } from '../model-data';
+
+import { LoggerService } from '../logger.service';
+
 function _windowWrapper() {
   return window;
 }
 
 @Component({
+  moduleId: module.id,
   selector: 'radio-audio',
   templateUrl: './radio-audio.component.html',
   styleUrls: ['./radio-audio.component.css']
 })
 
 export class RadioAudioComponent implements OnInit {
+  @Input()
+  stream: Stream;
 
+  @Output()
+  shift = new EventEmitter<number>();
+  
   private window: any = _windowWrapper();
   private timeout: any;
   private startTransition: any;
@@ -67,6 +77,8 @@ export class RadioAudioComponent implements OnInit {
 
   @ViewChild('audioplayer') player;
 
+  constructor(private logger: LoggerService) { }
+
   ngOnInit() {
       /** Init player with the first occurrence of src's array. */
       if (this.src.length) { this.list = this.src[this.startPosition]; }
@@ -74,7 +86,10 @@ export class RadioAudioComponent implements OnInit {
 
   ngAfterViewInit() {
       if (this.transitionEnd) {
-          this.player.nativeElement.addEventListener('play', () => this.audioTransition(this.player.nativeElement.duration, this.player.nativeElement.currentTime));
+          this.player.nativeElement.addEventListener('play', () => {
+            this.list = this.stream.url; /** added streem */
+            this.audioTransition(this.player.nativeElement.duration, this.player.nativeElement.currentTime);
+          });
       }
 
       this.player.nativeElement.addEventListener('ended', () => {
@@ -197,4 +212,6 @@ export class RadioAudioComponent implements OnInit {
       });
   }
 
+  left()   { this.shift.emit(-1); }
+  right()  { this.shift.emit(1); }
 }

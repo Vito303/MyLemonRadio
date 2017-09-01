@@ -39,19 +39,19 @@ export class DataService {
   //     .catch(error => this.handleError(error));
   // }
   
-  // getRadioStations() {
-  //   return this.httpClient.get<Array<Station>>(this.stationsUrl).catch(error => this.handleError(error));
-  // }
-
-  /** Get existing stations as an Observable */
-  getRadioStations(): Observable<Station[]> {
-    this.logger.log('Getting stations as an Observable via Http ...');
-
-    return this.http.get(this.stationsUrl)
-      .map(response => response.json().data as Station[])  // <-- extract data
-      .do(stat => this.logger.log(`Got ${stat.length} stations`))
-      .catch(error => this.handleError(error));
+  getRadioStations() {
+    return this.httpClient.get<Array<Station>>(this.stationsUrl).catch(error => this.handleError(error));
   }
+
+  // /** Get existing stations as an Observable */
+  // getRadioStations(): Observable<Station[]> {
+  //   this.logger.log('Getting stations as an Observable via Http ...');
+
+  //   return this.http.get(this.stationsUrl)
+  //     .map(response => response.json().data as Station[])  // <-- extract data
+  //     .do(stat => this.logger.log(`Got ${stat.length} stations`))
+  //     .catch(error => this.handleError(error));
+  // }
 
   /** Common Http Observable error handler */
   private handleError(error: any): Observable<any> {
