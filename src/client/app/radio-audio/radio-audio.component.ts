@@ -55,7 +55,7 @@ export class RadioAudioComponent implements OnInit {
   /** Interval in order to set the audio transition, in ms, default: 500ms. */
   @Input() intervalTransition = 500;
   /** Define if transition, default: false. */
-  @Input() transitionEnd: boolean = true;
+  @Input() transitionEnd: boolean = false;
   /** Define the preload status, default metadata. */
   @Input() transitionStart: boolean = false;
   /** Define the preload status, default metadata. */
@@ -81,13 +81,13 @@ export class RadioAudioComponent implements OnInit {
 
   ngOnInit() {
       /** Init player with the first occurrence of src's array. */
+      this.list = this.stream.url; /** added streem */
       if (this.src.length) { this.list = this.src[this.startPosition]; }
   }
 
   ngAfterViewInit() {
       if (this.transitionEnd) {
           this.player.nativeElement.addEventListener('play', () => {
-            this.list = this.stream.url; /** added streem */
             this.audioTransition(this.player.nativeElement.duration, this.player.nativeElement.currentTime);
           });
       }
